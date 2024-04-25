@@ -1,0 +1,68 @@
+{% extends 'plantilla.html' %}
+
+{% block content %}
+
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-success">{{ m}} </div>
+{% endfor %}
+{% endif %}
+
+
+<h2 class="text-center">Información</h2>
+<form class="w-50 shadow mx-auto p-4 m-3" action="informacion/guardar" method="post">
+  {% csrf_token %}
+  Nombre: <input type="text" name="nombre" class="form-control my-2" required>
+  Transporte:
+  <select name="transporte" class="form-control my-2" required>
+    <option value="Tren">Tren</option>
+    <option value="Corredor">Corredor</option>
+    <option value="Metropolitano">Metropolitano</option>
+  </select>
+  Horario: <input type="time" name="horario" class="form-control my-2" required>
+  DNI: <input type="number" name="dni" class="form-control my-2" required>
+  Edad: <input type="number" name="edad" class="form-control my-2" required>
+  <input type="submit" value="Guardar" class="btn btn-primary mt-2">
+</form>
+
+
+
+<table class="table table-light w-75 mx-auto text-center">
+  <tr class="table-dark">
+    <th>Nombre</th>
+    <th>Tipo de transporte</th>
+    <th>Horario</th>
+    <th>DNI</th>
+    <th>Edad</th>
+    <th colspan="2"></th>
+  </tr>
+  {% for i in informacion %}
+  <tr>
+    <td>{{ i.nombre }}</td>
+    <td>{{ i.transporte }}</td>
+    <td>{{ i.horario }}</td>
+    <td>{{ i.dni }}</td>
+    <td>{{ i.edad }}</td>
+    <td>
+      <form action="{% url 'eliminar' i.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" onclick="return confirm('¿Deseas eliminar la informacion?') ">
+          <i class="fa fa-trash"></i>
+        </button>
+      </form>
+    </td>
+    <td>
+      <form action="{% url 'detalle' i.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-warning">
+          <i class="fa fa-edit"></i>
+        </button>
+      </form>
+    </td>
+  </tr>
+
+  {% endfor %}
+
+</table>
+
+{% endblock %}

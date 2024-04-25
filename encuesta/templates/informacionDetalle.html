@@ -1,0 +1,28 @@
+{% extends 'plantilla.html' %}
+
+{% block content %}
+
+<h2 class="text-center">Información</h2>
+
+<form class="w-50 shadow mx-auto p-4 m-3" action="{% url 'editar'  %}" method="post">
+  <input type="hidden" name="id" value="{{ seleccionado.id }}">
+  {% csrf_token %}
+  Nombre: <input type="text" name="nombre" class="form-control my-2" required value="{{ seleccionado.nombre }}">
+  Transporte:
+  <select name="transporte" class="form-control my-2" required>
+    <option value="Tren">Tren</option>
+    <option value="Corredor">Corredor</option>
+    <option value="Metropolitano">Metropolitano
+    </option>
+  </select>
+  Horario: <input type="time" name="horario" class="form-control my-2" required value="{{ seleccionado.horario }}">
+  DNI: <input type="number" name="dni" class="form-control my-2" required {{ seleccionado.edad }}
+    value="{{ seleccionado.dni }}">
+  Edad: <input type="number" name="edad" class="form-control my-2" required value="{{ seleccionado.edad }}">
+  <input type="submit" value="Actualizar" class="btn btn-warning mt-2">
+</form>
+
+
+
+
+{% endblock %}
